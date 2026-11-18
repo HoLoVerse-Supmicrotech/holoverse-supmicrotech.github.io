@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Souris en AR</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; }
+  </style>
+</head>
+
+<body>
+  <!-- targets.mind : à générer depuis ton image (voir compilateur MindAR) -->
+  <a-scene
+    mindar-image="imageTargetSrc: ../../logo.mind; filterMinCF: 0.0001; filterBeta: 0.001;"
+    color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false">
+
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+    <a-entity mindar-image-target="targetIndex: 0">
+      <!-- Repère AR.js : y = hauteur, plan de la feuille = xz.
+           Repère MindAR : z = hauteur, plan = xy.
+           La rotation de 90° sur x convertit l'un dans l'autre,
+           donc tes coordonnées d'origine restent inchangées. -->
+      <a-entity rotation="90 0 0" scale="0.0885 0.0885 0.0885">
+
+        <a-entity line="start: 14.37 3.5 -2.93; end: 19.3 7 -6; color: #4aa3ff"></a-entity>
+        <a-text value="Clic droit" position="19.5 7 -6" rotation="-90 0 0" anchor="left" width="20" color="#4aa3ff"></a-text>
+
+        <a-entity line="start: 12.91 3.8 -3.07; end: 19.3 8.5 -3; color: yellow"></a-entity>
+        <a-text value="Molette" position="19.5 8.5 -3" rotation="-90 0 0" anchor="left" width="20" color="yellow"></a-text>
+
+        <a-entity line="start: 12.96 3.6 -1.5; end: 19.3 7 0; color: #7fdc6a"></a-entity>
+        <a-text value="Bouton DPI" position="19.5 7 0" rotation="-90 0 0" anchor="left" width="20" color="#7fdc6a"></a-text>
+
+        <a-entity line="start: 11.36 3.5 -2.93; end: 9.2 0.5 -4.5; color: red"></a-entity>
+        <a-text value="Clic gauche" position="9 0.5 -4.5" rotation="-90 0 0" anchor="right" width="16" color="red"></a-text>
+
+        <a-entity line="start: 10.03 2.2 -1.81; end: 9.2 0.5 -2.5; color: #c060e0"></a-entity>
+        <a-text value="Bouton avant" position="9 0.5 -2.5" rotation="-90 0 0" anchor="right" width="16" color="#c060e0"></a-text>
+
+        <a-entity line="start: 9.67 2.2 -0.31; end: 9.2 0.5 -0.5; color: orange"></a-entity>
+        <a-text value="Bouton retour" position="9 0.5 -0.5" rotation="-90 0 0" anchor="right" width="16" color="orange"></a-text>
+
+      </a-entity>
+    </a-entity>
+  </a-scene>
+</body>
+</html>
