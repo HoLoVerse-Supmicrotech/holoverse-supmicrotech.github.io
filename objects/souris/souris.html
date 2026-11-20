@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,11 +10,13 @@
    expériences de réalité virtuelle (VR) et de réalité augmentée (AR).-->
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
   <style>
-    html, body { 
-      margin: 0; 
-      height: 100%; 
-      overflow: hidden; 
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
     }
+
     #notice {
       position: fixed;
       left: 0;
@@ -28,8 +31,14 @@
       pointer-events: none;
       transition: opacity 0.3s;
     }
-    #notice strong { color: #ffd54a; }
-    #notice.hidden { opacity: 0; }
+
+    #notice strong {
+      color: #ffd54a;
+    }
+
+    #notice.hidden {
+      opacity: 0;
+    }
   </style>
 </head>
 
@@ -39,11 +48,8 @@
     à l'écran, bien éclairé et sans reflet, pour que la réalité augmentée s'affiche.
   </div>
 
-  <a-scene
-    mindar-image="imageTargetSrc: ../../shared/logo.mind; filterMinCF: 0.0001; filterBeta: 0.001;"
-    color-space="sRGB"
-    renderer="colorManagement: true, physicallyCorrectLights"
-    vr-mode-ui="enabled: false"
+  <a-scene mindar-image="imageTargetSrc: ../../shared/logo.mind; filterMinCF: 0.0001; filterBeta: 0.001;"
+    color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false">
     <!--initialise automatiquement le renderer, la caméra, les lumières et le support WebXR.  
     C'est le point d'entrée unique.-->
@@ -56,6 +62,13 @@
       <!--out objet 3D (cube, sphère, modèle glTF, texte, son…) est une entité, à laquelle on
           attache des composants (géométrie, matériau, animation, comportement AR, etc.).-->
       <a-entity scale="0.115 0.115 0.115">
+
+        <!-- ajoute les sphères ici, juste après l'ouverture -->
+        <a-sphere position="0 0 0" radius="0.3" color="white"></a-sphere>
+        <a-sphere position="4.35 2.45 0" radius="0.3" color="red"></a-sphere>
+        <a-sphere position="-4.35 2.45 0" radius="0.3" color="red"></a-sphere>
+        <a-sphere position="4.35 -2.45 0" radius="0.3" color="red"></a-sphere>
+        <a-sphere position="-4.35 -2.45 0" radius="0.3" color="red"></a-sphere>
 
         <!-- Clic droit -->
         <a-entity line="start: 12.2 3.05 2.9; end: 19.3 6 7; color: #4aa3ff"></a-entity>
@@ -93,4 +106,5 @@
     target.addEventListener('targetLost', () => notice.classList.remove('hidden'));
   </script>
 </body>
+
 </html>
