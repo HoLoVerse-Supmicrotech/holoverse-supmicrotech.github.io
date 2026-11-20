@@ -5,25 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Souris en AR</title>
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <!--A-Frame est un framework open-source basé sur le web (HTML) pour créer des
+   expériences de réalité virtuelle (VR) et de réalité augmentée (AR).-->
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
   <style>
-    html, body { margin: 0; height: 100%; overflow: hidden; }
+    html, body { 
+      margin: 0; 
+      height: 100%; 
+      overflow: hidden; 
+    }
+    #notice {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 10;
+      padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 12px;
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      font: 15px/1.4 system-ui, sans-serif;
+      text-align: center;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    #notice strong { color: #ffd54a; }
+    #notice.hidden { opacity: 0; }
   </style>
 </head>
 
 <body>
+  <div id="notice">
+    <strong>Important :</strong> le logo de l'école doit apparaître en entier
+    à l'écran, bien éclairé et sans reflet, pour que la réalité augmentée s'affiche.
+  </div>
+
   <a-scene
     mindar-image="imageTargetSrc: ../../shared/logo.mind; filterMinCF: 0.0001; filterBeta: 0.001;"
     color-space="sRGB"
     renderer="colorManagement: true, physicallyCorrectLights"
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false">
+    <!--initialise automatiquement le renderer, la caméra, les lumières et le support WebXR.  
+    C'est le point d'entrée unique.-->
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
     <a-entity mindar-image-target="targetIndex: 0">
       <!-- Repère MindAR : x = droite, y = haut de la feuille, z = hauteur au-dessus de la feuille.
            Unité : 0.0885 x largeur imprimée de l'image cible. -->
+      <!--out objet 3D (cube, sphère, modèle glTF, texte, son…) est une entité, à laquelle on
+          attache des composants (géométrie, matériau, animation, comportement AR, etc.).-->
       <a-entity scale="0.0885 0.0885 0.0885">
 
         <!-- Clic droit -->
@@ -53,5 +84,13 @@
       </a-entity>
     </a-entity>
   </a-scene>
+
+  <script>
+    // La notice disparaît dès que le logo est reconnu, et revient s'il est perdu.
+    const notice = document.getElementById('notice');
+    const target = document.querySelector('[mindar-image-target]');
+    target.addEventListener('targetFound', () => notice.classList.add('hidden'));
+    target.addEventListener('targetLost', () => notice.classList.remove('hidden'));
+  </script>
 </body>
 </html>
